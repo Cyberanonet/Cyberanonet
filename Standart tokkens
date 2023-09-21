@@ -1,0 +1,22 @@
+def clean_data_to_tokens(dataset):
+    tokens = []
+    char_replace = "()[]{},;'/\=:^<>|`+\""
+    for source_string in dataset:
+        source_string = re.sub(r"FromBase64String\(\'(.*)\'\)", "base64_string", source_string)
+        source_string = re.sub(r"([a-zA-Z0-9\/\+=]{100,})+", "base64_string", source_string)
+        for char in char_replace:
+            source_string = source_string.replace(char, ' ')
+        source_string = re.sub(r"(?<!\S)\d+(?!\S)", " ", source_string)
+        source_string = re.sub(r"0x\S+", " ", source_string)
+        ip_addresses = re.findall(r'(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)', source_string)
+        for ip in ip_addresses:
+            if ip.startswith('10.') or ip.startswith('192.') or ip.startswith('172.16.') or ip.startswith('127.0.'):
+                source_string = source_string.replace(ip, 'internal_ip')
+            else:
+                source_string = source_string.replace(ip, 'external_ip')
+        source_string = source_string.replace('.', ' ')
+        tokens.append(re.sub(r'\s+', ' ', source_string.lower()))
+    return tokens
+# Обрабатываем данные
+train_token_ds = clean_data_to_tokens(train_ds)
+test_token_ds = clean_data_to_tokens(test_ds)
