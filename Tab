@@ -1,0 +1,16 @@
+# Loss
+plt.plot(model_history.history['loss'], label='loss')
+plt.plot(model_history.history['val_loss'], label='val_loss')
+plt.title('Статистика обучения модели (loss)')
+plt.ylabel('value')
+plt.xlabel('No. epoch')
+plt.legend(loc="upper right")
+plt.show()
+# Accuracy
+plt.plot(model_history.history['accuracy'], label='accuracy')
+plt.plot(model_history.history['val_accuracy'], label='val_accuracy')
+plt.title('Статистика обучения модели (accuracy)')
+plt.ylabel('value')
+plt.xlabel('No. epoch')
+plt.legend(loc="lower right")
+plt.show()
