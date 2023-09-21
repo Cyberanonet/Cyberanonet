@@ -1,6 +1,1 @@
-max_tokens_count = 90000 # Максимальный размер словаря нашего датасета ~91000 мы возьмем ТОП самых часто встречающихся токенов
-# Создадим слой TextVectorization
-text_vectorizer = layers.TextVectorization(max_tokens=max_tokens_count, # Максимальный размер словаря
-                                           output_sequence_length=max_token, # максимальное количество токенов
-                                           standardize=None) # Не используем стандартизацию т.к. уже преобразовали данные
-text_vectorizer.adapt(train_tokens) # Формирование словаря
+
