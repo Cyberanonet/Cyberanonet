@@ -1,0 +1,10 @@
+# Функция обрезает строки в массиве до количества токенов max_token_count
+def truncate_string(input_data, max_token_count):
+  for index in range(len(input_data)):
+    token_count = len(input_data[index].split())
+    if token_count > max_token_count:
+      input_data[index] = ' '.join(input_data[index].split()[:max_token_count])
+  return input_data
+max_token = 2000 # Значение в токенах покрывающее ~97% всех строк
+train_token_ds = truncate_string(train_token_ds, max_token)
+test_token_ds = truncate_string(test_token_ds, max_token)
