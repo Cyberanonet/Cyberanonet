@@ -1,0 +1,4 @@
+model_history = model_pwsh.fit(train_dataset,
+                              epochs=15,
+                              validation_data=val_dataset,
+                              callbacks=[checkpoint])
