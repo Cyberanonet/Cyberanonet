@@ -1,0 +1,8 @@
+inputs = layers.Input(shape=(1,), dtype=tf.string)
+text_vectors = text_vectorizer(inputs) # Слой TextVectorization
+token_embeddings = token_embed(text_vectors) # Слой Embedding
+model = layers.Convolution1D(32, kernel_size=32, padding="same",activation="relu")(token_embeddings)
+model = layers.MaxPooling1D(pool_size=(2))(model)
+model = layers.Bidirectional(layers.LSTM(16))(model)
+outputs = layers.Dense(2, activation="softmax")(model)
+model_pwsh = tf.keras.Model(inputs, outputs)
