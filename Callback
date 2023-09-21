@@ -1,0 +1,3 @@
+checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath='model_pwsh',
+                                                monitor='val_accuracy',
+                                                save_best_only=True)
