@@ -1,0 +1,3 @@
+token_embed = layers.Embedding(input_dim=max_tokens_count, # Максимальный размер словаря
+                               output_dim=16, # Количество эмбеддингов
+                               mask_zero=True)
