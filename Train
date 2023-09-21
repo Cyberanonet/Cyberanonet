@@ -1,0 +1,17 @@
+# Разделяем тренировочный датасет на 2 части (для тренировки и валидации) в пропорции 80х20
+train_tokens, val_tokens, train_labels, val_labels = train_test_split(train_token_ds, y_train, test_size=0.2, random_state=42)
+# Отдельно сохраняем валидационные метки, далее будем использовать для тестирования модели.
+val_labels_encoded = val_labels
+# Кодируем метки OneHotEncoder
+train_labels = pd.DataFrame(train_labels)
+val_labels = pd.DataFrame(val_labels)
+one_hot_encoder = OneHotEncoder(sparse_output=False)
+train_labels = one_hot_encoder.fit_transform(train_labels.to_numpy().reshape(-1, 1))
+val_labels = one_hot_encoder.transform(val_labels.to_numpy().reshape(-1, 1))
+# Формируем датасеты для тренировки, валидации и проверки
+train_dataset = tf.data.Dataset.from_tensor_slices((train_tokens, train_labels))
+val_dataset = tf.data.Dataset.from_tensor_slices((val_tokens, val_labels))
+test_dataset = tf.data.Dataset.from_tensor_slices((test_token_ds))
+train_dataset = train_dataset.batch(16).prefetch(tf.data.AUTOTUNE)
+val_dataset = val_dataset.batch(16).prefetch(tf.data.AUTOTUNE)
+test_dataset = test_dataset.batch(16).prefetch(tf.data.AUTOTUNE)
