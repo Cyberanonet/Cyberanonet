@@ -1,0 +1,4 @@
+model_pwsh.compile(loss="categorical_crossentropy",
+                   optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
+                   metrics=["accuracy"])
+print(model_pwsh.summary())
