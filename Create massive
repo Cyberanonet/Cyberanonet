@@ -1,0 +1,18 @@
+# Загрузка датасета
+train_bad = read_files('malicious_pure')
+train_valid = read_files('powershell_benign_dataset')
+test_bad = read_files('test_ds_bad')
+test_valid = read_files('test_ds_valid')
+
+# Объединяем массивы в единые датасеты
+train_ds = train_bad + train_valid
+test_ds = test_bad + test_valid
+# Создаем массивы с метками
+# 1 - malicious
+# 0 - clean
+y_train_bad = [1 for i in range(0, len(train_bad))]
+y_train_valid = [0 for i in range(0, len(train_valid))]
+y_train = y_train_bad + y_train_valid
+y_test_bad = [1 for i in range(0, len(test_bad))]
+y_test_valid = [0 for i in range(0, len(test_valid))]
+y_test = y_test_bad + y_test_valid
