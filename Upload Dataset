@@ -1,0 +1,7 @@
+def read_files(path):
+    dataset = []
+    for filename in os.listdir(path):
+        with open(os.path.join(path, filename), encoding = 'utf-8') as f:
+            line = f.read().replace('\n', ' ').replace('\t', ' ').replace('\r', ' ')
+            dataset.append(re.sub(r'\s+', ' ', line))
+    return dataset
