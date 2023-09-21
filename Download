@@ -1,0 +1,31 @@
+# Функция для подготовки результатов обучения модели
+def calculate_results(y_true, y_pred):
+  # Расчет accuracy
+  model_accuracy = accuracy_score(y_true, y_pred) * 100
+  # Расчет precision, recall, f1
+  model_precision, model_recall, model_f1, support = precision_recall_fscore_support(y_true, y_pred, average="weighted")
+  model_results = {"accuracy": model_accuracy,
+                  "precision": model_precision,
+                  "recall": model_recall,
+                  "f1": model_f1}
+  return model_results
+
+# Загрузка модели
+test_model = tf.keras.models.load_model("model_pwsh")
+# Тестирование модели
+print('Тестирование модели на неизвестных данных')
+# Получение результатов работы модели на тестовом датасете
+model_test_probs = test_model.predict(test_dataset)
+# Конвертация результатов в классы
+model_test_preds = tf.argmax(model_test_probs, axis=1)
+# Расчет результатов
+model_test_results = calculate_results(y_true=y_test,
+                                       y_pred=model_test_preds)
+print('Результаты тестирования: \n',model_test_results)
+
+print('Тестирование модели на валидационных данных')
+model_test_probs = test_model.predict(val_dataset)
+model_test_preds = tf.argmax(model_test_probs, axis=1)
+model_test_results = calculate_results(y_true=val_labels_encoded,
+                                       y_pred=model_test_preds)
+print('Результаты тестирования: \n',model_test_results)
